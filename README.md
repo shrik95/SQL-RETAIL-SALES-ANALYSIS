@@ -34,8 +34,8 @@ DROP TABLE
 IF EXISTS retail_sales;
 
 CREATE TABLE retail_salesretail_sales
-			(
-            transactions_id	INT PRIMARY KEY,
+	(
+            transactions_id INT PRIMARY KEY,
             sale_date DATE,
             sale_time TIME,
             customer_id	INT,
@@ -46,7 +46,7 @@ CREATE TABLE retail_salesretail_sales
             price_per_unit	FLOAT,
             cogs FLOAT,
             total_sale FLOAT
-            );
+	);
  ```
 
 ### 2. Data Exploration & Cleaning
@@ -63,23 +63,23 @@ FROM retail_sales;
 SELECT * 
 FROM retail_sales
 WHERE sale_date IS NULL
-	  OR category IS NULL
-    OR sale_time IS NULL
-    OR gender IS NULL
-    OR category IS NULL
-    OR quantity IS NULL
-    OR cogs IS NULL
-  	OR total_sale IS NULL;
+	OR category IS NULL
+	OR sale_time IS NULL
+	OR gender IS NULL
+	OR category IS NULL
+	OR quantity IS NULL
+	OR cogs IS NULL
+	OR total_sale IS NULL;
     
 DELETE FROM retail_sales
 WHERE sale_date IS NULL
-	  OR category IS NULL
-    OR sale_time IS NULL
-    OR gender IS NULL
-    OR category IS NULL
-    OR quantity IS NULL
-    OR cogs IS NULL
-	  OR total_sale IS NULL;
+	OR category IS NULL
+	OR sale_time IS NULL
+	OR gender IS NULL
+	OR category IS NULL
+	OR quantity IS NULL
+	OR cogs IS NULL
+	OR total_sale IS NULL;
 
 -- DATA EXPLORATION
 
@@ -116,7 +116,7 @@ FROM retail_sales
 WHERE quantity >= 4 
 	AND category ='CLOTHING'
 	AND year(SALE_DATE) = 2022
-    AND month(SALE_DATE) = 11	
+    	AND month(SALE_DATE) = 11	
 GROUP BY 1;
 
 ```
@@ -125,8 +125,8 @@ GROUP BY 1;
 ```sql
 SELECT 
 	category AS CATEGORY, 
-    SUM(total_sale) AS TOTAL_SALES,
-    COUNT(*) AS ORDER_COUNT
+	SUM(total_sale) AS TOTAL_SALES,
+	COUNT(*) AS ORDER_COUNT
 FROM retail_sales
 GROUP BY 1;
 ```
@@ -165,15 +165,15 @@ SELECT
 YEAR_S, 
 MONTH_S,
 TOTAL_SALE
-		FROM (
-				SELECT 
-					YEAR(SALE_DATE) YEAR_S, 
-					MONTH(SALE_DATE) MONTH_S, 
-					ROUND(AVG(total_sale),2) TOTAL_SALE,
-					RANK() OVER(PARTITION BY YEAR(SALE_DATE) ORDER BY AVG(TOTAL_SALE) DESC) AS RANKS
-				FROM retail_sales
-				GROUP BY YEAR(SALE_DATE), (MONTH(SALE_DATE))
-				ORDER BY 1, 3 DESC) T1 
+FROM (
+	SELECT 
+		YEAR(SALE_DATE) YEAR_S, 
+		MONTH(SALE_DATE) MONTH_S, 
+		ROUND(AVG(total_sale),2) TOTAL_SALE,
+		RANK() OVER(PARTITION BY YEAR(SALE_DATE) ORDER BY AVG(TOTAL_SALE) DESC) AS RANKS
+	FROM retail_sales
+	GROUP BY YEAR(SALE_DATE), (MONTH(SALE_DATE))
+	ORDER BY 1, 3 DESC) T1 
 WHERE RANKS = 1
 ;
 ```
@@ -208,9 +208,10 @@ SELECT *,
 	END AS SHIFT
 FROM retail_sales
 )
+
 SELECT 
 	SHIFT, 
-    COUNT(*) AS ORDERS    
+	COUNT(*) AS ORDERS    
 FROM HOURLY_CTE
 GROUP BY SHIFT;
 ```
